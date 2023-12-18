@@ -339,6 +339,14 @@ class BF16_Optimizer(ZeROOptimizer):
             for param in group:
                 param.grad = None
 
+    def _get_state(self):
+        return self.optimizer.state
+
+    def _set_state(self, value):
+        self.optimizer.state = value
+
+    state = property(_get_state, _set_state)
+
     def state_dict(self):
         state_dict = {}
         state_dict[CLIP_GRAD] = self.clip_grad
